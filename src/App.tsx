@@ -1,21 +1,30 @@
-import React from 'react';
+import { Outlet } from 'react-router-dom';
 import './App.scss';
+import { Footer } from './shared/Footer';
+import { Header } from './shared/Header';
+import { useEffect } from 'react';
 
-interface Props {
-  onClick: () => void;
-  children: React.ReactNode;
-}
+export const App = () => {
+  useEffect(() => {
+    document.body.classList.add('no-transition');
 
-export const Provider: React.FC<Props> = React.memo(({ onClick, children }) => (
-  <button type="button" onClick={onClick}>
-    {children}
-  </button>
-));
+    setTimeout(() => {
+      document.body.classList.remove('no-transition');
+    }, 1000);
+  }, []);
 
-export const App: React.FC = () => {
   return (
-    <div className="starter">
-      <Provider onClick={() => ({})}>TodoList</Provider>
+    <div className="App">
+      <header>
+        <Header />
+      </header>
+
+      <main className="main">
+        <Outlet />
+      </main>
+      <footer className="footer">
+        <Footer />
+      </footer>
     </div>
   );
 };
